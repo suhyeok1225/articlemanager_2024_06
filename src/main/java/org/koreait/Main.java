@@ -38,14 +38,28 @@ public class Main {
                 articles.add(article);
                 System.out.println(id + "번 글이 생성되었습니다");
                 lastArticleId++;
-            } else if (cmd.equals("article list")) {
+            } else if (cmd.startsWith("article list")) {
                 System.out.println("==게시글 목록==");
                 if (articles.size() == 0) {
                     System.out.println("아무것도 없어");
                 } else {
+                    String searchKeyword = cmd.substring("article list ".length()).trim();
+                    List<Article> printArticles = articles;
+                    if (searchKeyword.length() > 0){
+                        printArticles = new ArrayList<>();
+                        for (Article article : articles) {
+                            if (article.getTitle().contains(searchKeyword)){
+                                printArticles.add(article);
+                            }
+                        }
+                        if (printArticles.size() == 0){
+                            System.out.println("아무것도 없어");
+                            continue;
+                        }
+                    }
                     System.out.println("  번호   /       날짜     /   제목    /   내용   ");
-                    for (int i = articles.size() - 1; i >= 0; i--) {
-                        Article article = articles.get(i);
+                    for (int i = printArticles.size() - 1; i >= 0; i--) {
+                        Article article = printArticles.get(i);
                         if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
                             System.out.printf("   %d     /   %s   /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
                         } else {
@@ -53,8 +67,9 @@ public class Main {
                         }
                     }
                 }
+            }
 
-            } else if (cmd.startsWith("article detail")) {
+            else if (cmd.startsWith("article detail")) {
                 System.out.println("==게시글 상세보기==");
                 int id = Integer.parseInt(cmd.split(" ")[2]);
                 Article foundArticle = getArticleById(id);
