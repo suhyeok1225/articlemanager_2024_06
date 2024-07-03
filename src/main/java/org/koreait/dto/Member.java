@@ -1,6 +1,6 @@
-package org.koreait;
+package org.koreait.dto;
 
-public class Member {
+public class Member extends Dto {
     private int id;
     private String regDate;
     private String loginId;

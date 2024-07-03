@@ -1,4 +1,7 @@
-package org.koreait;
+package org.koreait.controller;
+
+import org.koreait.util.Util;
+import org.koreait.dto.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +12,8 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<Member> members;
     private String cmd;
-
-    private int lastMemberId = 3;
+    private Member loginedMember = null;
+    int lastMemberId = 3;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
@@ -24,10 +27,57 @@ public class MemberController extends Controller {
             case "join":
                 doJoin();
                 break;
+            case "login":
+                doLogin();
+                break;
+            case "logout":
+                doLogout();
+                break;
             default:
                 System.out.println("명령어 확인 (actionMethodName) 오류");
                 break;
         }
+    }
+    private boolean isLogined() {
+        return loginedMember != null;
+    }
+    private void doLogin() {
+        if (isLogined()) {
+            System.out.println("이미 로그인 상태야");
+            return;
+        }
+        System.out.println("==로그인==");
+        System.out.print("로그인 아이디 : ");
+        String loginId = sc.nextLine();
+        System.out.print("로그인 비밀번호 : ");
+        String loginPw = sc.nextLine();
+        Member member = getMemberByLoginId(loginId);
+
+        if (member == null) {
+            System.out.println("일치하는 회원이 없어");
+            return;
+        }
+
+        if (member.getLoginPw().equals(loginPw) == false) {
+            System.out.println("비밀번호가 일치하지 않습니다");
+            return;
+        }
+
+        loginedMember = member;
+
+        System.out.printf("로그인 성공! %s님 반갑습니다.\n", member.getName());
+
+    }
+    private void doLogout() {
+        if (!isLogined()) {
+            System.out.println("이미 로그아웃 상태야");
+            return;
+        }
+
+        loginedMember = null;
+
+        System.out.printf("로그아웃 성공!\n");
+
     }
 
     private void doJoin() {
@@ -71,6 +121,14 @@ public class MemberController extends Controller {
             }
         }
         return true;
+    }
+    private Member getMemberByLoginId(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return member;
+            }
+        }
+        return null;
     }
 
     public void makeTestData() {

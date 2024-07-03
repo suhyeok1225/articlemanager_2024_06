@@ -1,7 +1,9 @@
-package org.koreait;
+package org.koreait.articleMamager;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.koreait.controller.ArticleController;
+import org.koreait.controller.Controller;
+import org.koreait.controller.MemberController;
+
 import java.util.Scanner;
 
 public class App {

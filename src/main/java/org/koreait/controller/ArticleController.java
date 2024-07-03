@@ -1,4 +1,7 @@
-package org.koreait;
+package org.koreait.controller;
+
+import org.koreait.util.Util;
+import org.koreait.dto.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +12,11 @@ public class ArticleController extends Controller {
     private List<Article> articles;
     private String cmd;
 
-    private int lastArticleId = 3;
+    int lastArticleId = 3;
 
     public ArticleController(Scanner sc) {
+        this.articles = new ArrayList<>();
         this.sc = sc;
-        articles = new ArrayList<>();
     }
 
     public void doAction(String cmd, String actionMethodName) {
@@ -107,25 +110,35 @@ public class ArticleController extends Controller {
     }
 
     private void doDelete() {
-        System.out.println("==게시글 삭제==");
-
-        int id = Integer.parseInt(cmd.split(" ")[2]);
+        String[] cmdDiv = cmd.split(" ");
+        int id = 0;
+        try {
+            id = Integer.parseInt(cmdDiv[2]);
+        } catch (Exception e) {
+            System.out.println("번호는 정수로 입력해");
+            return;
+        }
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
-            System.out.println("해당 게시글은 없습니다");
+            System.out.printf("%d번 게시글은 없습니다\n", id);
             return;
         }
         articles.remove(foundArticle);
-        System.out.println(id + "번 게시글이 삭제되었습니다");
+        System.out.println(id + "번 글이 삭제되었습니다.");
     }
 
     private void doModify() {
-        System.out.println("==게시글 수정==");
-
-        int id = Integer.parseInt(cmd.split(" ")[2]);
+        String[] cmdDiv = cmd.split(" ");
+        int id = 0;
+        try {
+            id = Integer.parseInt(cmdDiv[2]);
+        } catch (Exception e) {
+            System.out.println("번호는 정수로 입력해");
+            return;
+        }
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
-            System.out.println("해당 게시글은 없습니다");
+            System.out.printf("%d번 게시글은 없습니다\n", id);
             return;
         }
         System.out.println("기존 제목 : " + foundArticle.getTitle());
