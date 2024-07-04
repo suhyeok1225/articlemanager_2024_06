@@ -13,7 +13,6 @@ public class Article extends Dto {
         this.title = title;
         this.body = body;
     }
-
     public int getMemberId() {
         return memberId;
     }
@@ -25,40 +24,32 @@ public class Article extends Dto {
     public String getRegDate() {
         return regDate;
     }
-
     public String getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
-
     public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getBody() {
         return body;
     }
-
     public void setBody(String body) {
         this.body = body;
     }
+
 }

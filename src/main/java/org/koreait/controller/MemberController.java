@@ -12,8 +12,7 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<Member> members;
     private String cmd;
-    private Member loginedMember = null;
-    int lastMemberId = 3;
+    private int lastMemberId = 3;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
@@ -65,14 +64,9 @@ public class MemberController extends Controller {
     }
 
     private void doLogout() {
-        if (!isLogined()) {
-            System.out.println("이미 로그아웃 됐습니다.");
-            return;
-        }
-
         loginedMember = null;
 
-        System.out.printf("로그아웃 성공!\n");
+        System.out.println("로그아웃 성공!");
 
     }
 
@@ -129,6 +123,7 @@ public class MemberController extends Controller {
     }
 
     public void makeTestData() {
+        System.out.println("회원 테스트 데이터 생성");
         members.add(new Member(1, Util.getNow(), "test1", "test1", "김철수"));
         members.add(new Member(2, Util.getNow(), "test2", "test2", "김영희"));
         members.add(new Member(3, Util.getNow(), "test3", "test3", "홍길동"));

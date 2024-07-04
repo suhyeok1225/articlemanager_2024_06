@@ -112,35 +112,34 @@ public class ArticleController extends Controller {
     }
 
     private void doDelete() {
-        String[] cmdDiv = cmd.split(" ");
-        int id = 0;
-        try {
-            id = Integer.parseInt(cmdDiv[2]);
-        } catch (Exception e) {
-            System.out.println("번호는 정수로 입력해");
-            return;
-        }
+        System.out.println("==게시글 삭제==");
+        int id = Integer.parseInt(cmd.split(" ")[2]);
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
-            System.out.printf("%d번 게시글은 없습니다\n", id);
+            System.out.println("해당 게시글은 없습니다");
             return;
         }
+
+        if (foundArticle.getMemberId() != loginedMember.getId()) {
+            System.out.println("권한 없음");
+            return;
+        }
+
         articles.remove(foundArticle);
-        System.out.println(id + "번 글이 삭제되었습니다.");
+        System.out.println(id + "번 게시글이 삭제되었습니다");
     }
 
     private void doModify() {
-        String[] cmdDiv = cmd.split(" ");
-        int id = 0;
-        try {
-            id = Integer.parseInt(cmdDiv[2]);
-        } catch (Exception e) {
-            System.out.println("번호는 정수로 입력해");
-            return;
-        }
+        System.out.println("==게시글 수정==");
+        int id = Integer.parseInt(cmd.split(" ")[2]);
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
-            System.out.printf("%d번 게시글은 없습니다\n", id);
+            System.out.println("해당 게시글은 없습니다");
+            return;
+        }
+
+        if (foundArticle.getMemberId() != loginedMember.getId()) {
+            System.out.println("권한 없음");
             return;
         }
         System.out.println("기존 제목 : " + foundArticle.getTitle());
