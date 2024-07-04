@@ -1,4 +1,4 @@
-package org.koreait.articleMamager;
+package org.koreait.articleManager;
 
 import org.koreait.controller.ArticleController;
 import org.koreait.controller.Controller;
