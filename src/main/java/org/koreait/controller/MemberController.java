@@ -25,24 +25,12 @@ public class MemberController extends Controller {
 
         switch (actionMethodName) {
             case "join":
-                if (isLogined()) {
-                    System.out.println("이미 로그인중");
-                    return;
-                }
                 doJoin();
                 break;
             case "login":
-                if (isLogined()) {
-                    System.out.println("이미 로그인중");
-                    return;
-                }
                 doLogin();
                 break;
             case "logout":
-                if (isLogined()) {
-                    System.out.println("이미 로그인중");
-                    return;
-                }
                 doLogout();
                 break;
             default:
@@ -51,15 +39,8 @@ public class MemberController extends Controller {
         }
     }
 
-    public boolean isLogined() {
-        return loginedMember != null;
-    }
-
     private void doLogin() {
-        if (isLogined()) {
-            System.out.println("이미 로그인 상태입니다.");
-            return;
-        }
+
         System.out.println("==로그인==");
         System.out.print("로그인 아이디 : ");
         String loginId = sc.nextLine();
