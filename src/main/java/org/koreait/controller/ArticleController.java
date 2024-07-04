@@ -12,7 +12,7 @@ public class ArticleController extends Controller {
     private List<Article> articles;
     private String cmd;
 
-    int lastArticleId = 3;
+    private int lastArticleId = 3;
 
     public ArticleController(Scanner sc) {
         this.articles = new ArrayList<>();
@@ -24,6 +24,10 @@ public class ArticleController extends Controller {
 
         switch (actionMethodName) {
             case "write":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doWrite();
                 break;
             case "list":
@@ -33,9 +37,17 @@ public class ArticleController extends Controller {
                 showDetail();
                 break;
             case "modify":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doModify();
                 break;
             case "delete":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doDelete();
                 break;
             default:
@@ -57,6 +69,7 @@ public class ArticleController extends Controller {
         articles.add(article);
         System.out.println(id + "번 글이 생성되었습니다");
         lastArticleId++;
+
     }
 
     private void showList() {

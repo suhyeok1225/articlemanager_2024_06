@@ -25,12 +25,24 @@ public class MemberController extends Controller {
 
         switch (actionMethodName) {
             case "join":
+                if (isLogined()) {
+                    System.out.println("이미 로그인중");
+                    return;
+                }
                 doJoin();
                 break;
             case "login":
+                if (isLogined()) {
+                    System.out.println("이미 로그인중");
+                    return;
+                }
                 doLogin();
                 break;
             case "logout":
+                if (isLogined()) {
+                    System.out.println("이미 로그인중");
+                    return;
+                }
                 doLogout();
                 break;
             default:
@@ -38,12 +50,14 @@ public class MemberController extends Controller {
                 break;
         }
     }
-    private boolean isLogined() {
+
+    public boolean isLogined() {
         return loginedMember != null;
     }
+
     private void doLogin() {
         if (isLogined()) {
-            System.out.println("이미 로그인 상태야");
+            System.out.println("이미 로그인 상태입니다.");
             return;
         }
         System.out.println("==로그인==");
@@ -54,7 +68,7 @@ public class MemberController extends Controller {
         Member member = getMemberByLoginId(loginId);
 
         if (member == null) {
-            System.out.println("일치하는 회원이 없어");
+            System.out.println("일치하는 회원이 없습니다.");
             return;
         }
 
@@ -68,9 +82,10 @@ public class MemberController extends Controller {
         System.out.printf("로그인 성공! %s님 반갑습니다.\n", member.getName());
 
     }
+
     private void doLogout() {
         if (!isLogined()) {
-            System.out.println("이미 로그아웃 상태야");
+            System.out.println("이미 로그아웃 됐습니다.");
             return;
         }
 
@@ -122,6 +137,7 @@ public class MemberController extends Controller {
         }
         return true;
     }
+
     private Member getMemberByLoginId(String loginId) {
         for (Member member : members) {
             if (member.getLoginId().equals(loginId)) {
